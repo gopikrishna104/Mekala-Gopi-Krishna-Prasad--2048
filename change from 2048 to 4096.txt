@@ -1,0 +1,38 @@
+CHANGE OF 2048 TO 4096
+-----------------------
+
+1.In case of same 4X4 with 4096
+
+	the task is just to modify the win() function as follows:
+
+	def win():
+		for row in board:
+			for ele in row:
+				if ele==4096:
+					return True
+		return False
+
+
+2.In case of 8X8 with 4096:
+
+	we make seeral assumptions as follows:
+	for filling a randomly picked values and randomly added values, we fill 4 or 16
+
+def pickNewValue():#to fill cells randomly with 16 or 4
+    if random.randint(1,8)==2:
+        return 16
+    else:
+        return 4
+def addNewValue():
+    rowNumber=random.randint(0,boardsize-1)
+    colNumber=random.randint(0,boardsize-1)
+    while not board[rowNumber][colNumber]==0:#looping till an empty cell is found
+        rowNumber=random.randint(0,boardsize-1)
+        colNumber=random.randint(0,boardsize-1)
+    board[rowNumber][colNumber]=pickNewValue()#placing empty cell with 16 or 4
+
+
+    
+
+
+

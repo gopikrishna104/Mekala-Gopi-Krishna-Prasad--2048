@@ -1,0 +1,47 @@
+This file deals with the design principles of the 2048 game
+
+
+Software requirements:
+
+IDLE Python 3.7 32bit
+
+Hardware requirements:
+
+Laptop i3 processor (minimum)
+
+
+DESIGN PRINCIPLES:
+
+
+--> Here we need to move the board in 4 directions (up,down, left,right) to make the value of a cell to 2048 to win
+
+--> Intially we fill two random cells with 2 or 4 randomly after intialising the all empty cells to Zeroes
+
+--> now we press 1 for left, 2 for right, 3 for up and 4 for down.
+
+--> if one presses other than (1,2,3,4) then it should be prompted that it is an invalid move.
+
+--> for a given direction, we do the following things:
+	
+	* we check for 2048. If a cell contains 2048, the game is over with a win.
+	*if not present, we check whether there are any possible moves left or not. for that we actually rotate the board in all possible directions and mergings are performed. if the 
+	  resultant board is same as that of the one before all rotations performed, it indicates that there are no moves left indicating the game is over with a lose.
+	*Else we now choose two empty cells at random an now we add randomly either 2 or 4 randomly.
+
+--> How the left operation works???
+	* First we move every element of each row to as left as possible until no empty spaces are encountered for each element.
+	* now we check whether the corresponding two elements are same are not. if same we add the element ( equal to doubling of the element). 
+	* now we move all the elements of each row to left again
+
+--> How the right operation works??
+	* Doing a right operation is same as: reversing each row ----> noe perform the left operation--->reverse the each row again
+
+--> How the up move works??
+	* We transpose the current board
+	* Now we perform the left operation
+	* We now transpose the given board again 
+
+--> How the down works??
+	* We tranpose the current board		
+	* we perform the right operation (reverse the row --> left operation --> reverse the row)
+	* we again transpose the board

@@ -1,0 +1,3 @@
+CODE WAKLKTHROUGH 
+-----------------
+it is provided in 2048game.py

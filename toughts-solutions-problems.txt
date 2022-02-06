@@ -1,0 +1,83 @@
+THOUGHTS
+---------
+
+BOARD 4X4:
+
+We use comprehensive lists(lists with in a list) to hold the values.
+[[0]*4]*4
+for display, each element to be seperatec from other with "|"
+
+OPERATIONS:
+
+we move check whether there are any empty spaces left in a row or not
+	--> if not, then the row in the resultant board after operation remains the same.
+	    else, there is a chance for this cell to get filled with  2 or 4 by random.
+	--> if the operation is left/right:
+		we add consecutive same elements(ignoring spaces/empty cells) and place the resultant in the left most cell (left operation) or right most( in right operation)
+	--> if the operation is up/down:
+		we add consecutive same elements(ignoring spaces/empty cells) and place the resultant in the top most cell (up operation) or bottom most( in down operation)
+AFTER OPERATIONS:
+
+	--> check win condition: if 2048 is present, game over with a win
+				 else we now check for atleast 1 empty cell and atmost 2 empty cells, ( if empty cells are Zero, Game over with a lose) and fill with 2 or 4 at random.
+	--> out of moves:
+		when after performing an operation, (just like bankers algorithm) we perform all operations on board and check whether the resultant board is same as initial or not.
+		if yes, game over else we ask the user for next move
+
+PROBLEMS & SOLUTIONS:
+----------
+
+for design of board we use list of lists each filled with  zeroes
+
+next we ask person to choose a move:
+	if he selects a number other than 1,2,3,4 then it is declared as invalid move and player is asked to choose again.
+
+now we design functions:
+
+display():
+
+	here we print every row with "|" as seperator
+
+	|2| | | |
+        | |4| | |
+	| | | |8|
+        | | | | |
+
+	#issue here is if elements are of different length then the pattern looks as below
+
+	|2| | | |
+        | |64| | |
+	| | | |128|
+        |2048| |4| |
+
+	so to make the board look more appealing we check for the maximum interger and pad the every empty cell with length of the integer(ex: for 128 it is 3 , for 2 it is 1) and for every non empty cell, we pad cell with maximum length minus length of the current cell element.	
+ 
+for filling a random values: 
+	we import random values and we choose atmost two empty cells and fill them with either 2 or 4 depending on the values returned by randint()
+	we call this till the end of the game. (using pickNewValue for initial board setting and adddNewValue for the rest of the play).
+for every operation we check whether the input is in [1,2,3,4]. if not we report it as an invalid move and we ask the user to input another integer(move).
+
+for 1 we perform the LEFT operation: 
+	we shift the each element to extreme left as possible ignoring the spaces-->we merge the similar elements(adding) and we place them to the leftmost cell. this is done for every row.
+
+for 2 we perform the RIGHT operation:
+	actually we need to shift the each row element to as right as possible and we ignore the spaces as similar to left operation. Instead of writing a new code, we use code reusability 	of the above left operation. We reverse every row and then left operation is invoked and then we reverse the result.
+	the problem is we need to write a reverse function which can occupy space but provides reusability and readability
+
+for 3 we perform the UP operation:
+	Actually we need to shift every column element to the up ignoring spaces and then we merge similar cells and push them to top most cells ignoring the spaces. Here we need to write 		two loops for columnwise shift and then we need to invoke seperate function for the merging and moving which time coslty. So we use a transpose function and we perform the left 		operation each row in the board.
+
+for 4 we perform the DOWN operation:
+	Actually we need to shift every element in each column to down and then merge similar cells similar to above operations. instead of writing a new function, we generally reverse the 	board and transpose it and then we perform the right operation(internally again left operation) and then reverse the transposed resultant board.
+
+WIN CONDITIONS:
+ if 2048 is present in any one cell, the person wins. for this we use linear search
+
+LOST CONDITIONS:
+ if the person goes out of moves, the person is lost.
+	i.e., if there are no empty cells and no 2048 cell
+	      if t a particular move happened and performing all the 4 operations on the resultant board gives the same result, then the person goes out of moves
+	here we if we perform the operations on current board and if resultant may not result in out of moves, we need to get back to previous board state. for this we deep copy the current 	board position to two temporary boards to preserve the current conditions.
+	
+
+ 
